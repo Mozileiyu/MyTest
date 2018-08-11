@@ -1,16 +1,16 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include <openssl/md5.h> // md5 Í·ÎÄ¼ş
+ï»¿#define _CRT_SECURE_NO_WARNINGS
+#include <openssl/md5.h> // md5 å¤´æ–‡ä»¶
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 void getMD5(const char* str, char* result)
 {
 	MD5_CTX ctx;
-	// ³õÊ¼»¯
+	// åˆå§‹åŒ–
 	MD5_Init(&ctx);
-	// Ìí¼ÓÊı¾İ
+	// æ·»åŠ æ•°æ®
 	MD5_Update(&ctx, str, strlen(str));
-	// ¼ÆËã½á¹û
+	// è®¡ç®—ç»“æœ
 	unsigned char md[16] = { 0 };
 	MD5_Final(md, &ctx);
 	for (int i = 0; i < 16; ++i)
@@ -23,6 +23,11 @@ int main() {
 	char result[33] = { 0 };
 	getMD5("hello, md5", result);
 	printf("md5 value: %s\n", result);
+
+	unsigned char authCode[] = {0};
+	int authCodelen;
+	HMAC(EVP_md5(), "111", 3, "222", 3, (unsigned char *)authCode, &authCodelen);
+	printf("EVP_md5 value: %s\n", authCode);
 	system("pause");
 	return 0;
 }
